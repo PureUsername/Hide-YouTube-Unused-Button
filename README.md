@@ -1,10 +1,12 @@
 # Hide-YouTube-Unused-Button
 
-It will hide:
-Top menu
-Left menu
-Comment
-Subscribe buttom
+## Features
+It will hide: 
+
+- Top menu
+- Left menu
+- Comment
+- Subscribe button
 
 Extra feature:
-Expend from 4 column to 5 column
+- Expend from 4 column to 5 column

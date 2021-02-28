@@ -1,0 +1,136 @@
+// ==UserScript==
+// @name         Hide YouTube Unused Button
+// @namespace    http://tampermonkey.net/
+// @version      1.0
+// @description  include hide comment
+// @author       SoonKok
+// @match        https://www.youtube.com/*
+// ==/UserScript==
+
+
+window.addEventListener("yt-navigate-finish", function(event) {
+    mainTrigger();
+    content();
+    changeToFiveRows();
+});
+
+window.addEventListener("resize", function(event) {
+    mainTrigger();
+    content();
+    var width = window.innerWidth;
+    if (width >= 1920) {
+        changeToFiveRows();
+    } else {
+        changeToFourRows();
+    }
+});
+
+window.addEventListener("mouseover", function(event) {
+    mainTrigger();
+    content();
+    changeToFiveRows();
+});
+
+(function() {
+    mainTrigger();
+    content();
+    changeToFiveRows();
+})();
+
+function mainTrigger() {
+    var guideExists = document.querySelector("#guide");
+    if (guideExists != null) {
+        var guide = document.querySelector("#guide");
+        guide.removeAttribute("opened");
+    }
+
+    var ytdAppCount = document.getElementsByTagName("ytd-app");
+    for (let ytdApp of ytdAppCount) {
+        var element = document.getElementsByTagName("guide-persistent-and-visible");
+        if (element != null) {
+            ytdApp.removeAttribute("guide-persistent-and-visible");
+            ytdApp.removeAttribute("mini-guide-visible_");
+            ytdApp.setAttribute("is-watch-page","");
+        }
+    }
+
+    var topBarMenuButtonCount = document.getElementsByClassName("style-scope ytd-topbar-menu-button-renderer");
+    if (topBarMenuButtonCount != null) {
+        for (let topBarMenuButton of topBarMenuButtonCount) {
+            topBarMenuButton.remove();
+        }
+    }
+
+    var topBarNotificationButtonCount = document.getElementsByClassName("yt-simple-endpoint style-scope ytd-notification-topbar-button-renderer");
+    if (topBarNotificationButtonCount != null) {
+        for (let topBarNotificationButton of topBarNotificationButtonCount) {
+            topBarNotificationButton.remove();
+        }
+    }
+
+    var topBarMainMenuGuideButton = document.getElementById("guide-button");
+    if (topBarMainMenuGuideButton != null) {
+        topBarMainMenuGuideButton.remove();
+    }
+
+    var voiceSearchButton = document.getElementById("voice-search-button");
+    if (voiceSearchButton != null) {
+        voiceSearchButton.remove();
+    }
+
+    var subscribeButton = document.getElementById("subscribe-button");
+    if (subscribeButton != null) {
+        subscribeButton.remove();
+    }
+
+    var commentHeader = document.getElementById("simple-box");
+    if (commentHeader != null) {
+        commentHeader.remove();
+    }
+}
+
+function changeToFiveRows() {
+    var twoColumnBrowserExists = document.getElementsByClassName("style-scope ytd-two-column-browse-results-renderer");
+    if (twoColumnBrowserExists != null) {
+        var twoColumnBrowserCount = document.getElementsByClassName("style-scope ytd-two-column-browse-results-renderer");
+        for (let twoColumnBrowser of twoColumnBrowserCount) {
+            twoColumnBrowser.removeAttribute("style");
+            twoColumnBrowser.setAttribute("style","--ytd-rich-grid-items-per-row:5; --ytd-rich-grid-posts-per-row:5; --ytd-rich-grid-movies-per-row:9;");
+        }
+    }
+}
+
+function changeToFourRows() {
+    var twoColumnBrowserExists = document.getElementsByClassName("style-scope ytd-two-column-browse-results-renderer");
+    if (twoColumnBrowserExists != null) {
+        //alert("it works3")
+        var twoColumnBrowserCount = document.getElementsByClassName("style-scope ytd-two-column-browse-results-renderer");
+        for (let twoColumnBrowser of twoColumnBrowserCount) {
+            twoColumnBrowser.removeAttribute("style");
+            twoColumnBrowser.setAttribute("style","--ytd-rich-grid-items-per-row:4; --ytd-rich-grid-posts-per-row:4; --ytd-rich-grid-movies-per-row:9;");
+        }
+    }
+}
+
+function content() {
+    var scopeMenuCount = document.getElementsByClassName("style-scope ytd-menu-renderer");
+    if (scopeMenuCount != null) {
+        for (let scopeMenu of scopeMenuCount) {
+            scopeMenu.remove();
+        }
+    }
+
+    var overlayToggleCount = document.getElementsByClassName("style-scope ytd-thumbnail-overlay-toggle-button-renderer");
+    if (overlayToggleCount != null) {
+        for (let overlayToggle of overlayToggleCount) {
+            overlayToggle.remove();
+        }
+    }
+
+    var overlayCount = document.getElementsByTagName("ytd-thumbnail-overlay-toggle-button-renderer");
+    if (overlayCount != null) {
+        for (let overlay of overlayCount) {
+            overlay.remove();
+        }
+    }
+}
